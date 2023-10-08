@@ -2,7 +2,6 @@ import asyncio
 from io import BytesIO
 
 from PIL import Image as PillowImage
-from celery import shared_task
 from telegram import Bot
 
 from app.config import Config

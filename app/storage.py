@@ -1,5 +1,4 @@
 import io
-from typing import Any
 
 from minio import Minio
 
