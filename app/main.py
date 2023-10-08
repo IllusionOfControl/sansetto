@@ -3,7 +3,7 @@ import logging
 from flask import Flask
 
 from app.config import Config
-from app.extensions import scheduler, db
+from app.extensions import scheduler, db, migrate
 
 
 def create_application() -> Flask:
@@ -14,11 +14,11 @@ def create_application() -> Flask:
     logging.getLogger("apscheduler").setLevel(logging.INFO)
 
     db.init_app(application)
+    migrate.init_app(application, db, directory=Config.ALEMBIC_MIGRATE_DIRECTORY)
 
     with application.app_context():
-        from app import tasks  # noqa: F401
+        from app import tasks, models  # noqa: F401
 
-        db.create_all()
         scheduler.start()
 
     from app.views import bp

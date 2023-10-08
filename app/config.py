@@ -7,6 +7,8 @@ load_dotenv()
 
 class Config:
     SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    ALEMBIC_MIGRATE_DIRECTORY = "app/migrations"
 
     MINIO_HOST = os.environ["MINIO_HOST"]
     MINIO_ACCESS_KEY = os.environ["MINIO_ACCESS_KEY"]
