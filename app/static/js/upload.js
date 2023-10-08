@@ -41,7 +41,7 @@ function uploadStartHandler(event) {
 
 function stateChangeHandler(event) {
     if (this.readyState === XMLHttpRequest.DONE) {
-        // window.location.href = this.responseURL;
+        window.location.href = this.responseURL;
     }
 }
 

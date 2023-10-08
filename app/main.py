@@ -16,7 +16,7 @@ def create_application() -> Flask:
     db.init_app(application)
 
     with application.app_context():
-        from application import tasks  # noqa: F401
+        from app import tasks  # noqa: F401
 
         db.create_all()
         scheduler.start()

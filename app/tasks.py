@@ -15,7 +15,7 @@ from app.storage import ImageStorage
     "interval",
     id="upload_to_telegram",
     max_instances=1,
-    seconds=10
+    minutes=10
 )
 def upload_to_telegram():
     with scheduler.app.app_context():
