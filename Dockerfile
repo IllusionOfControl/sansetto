@@ -8,6 +8,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
+RUN python -m flask -A app.main:app db upgrade
+
 EXPOSE 5000
 
 CMD ["gunicorn", "app.main:app"]
