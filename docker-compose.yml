@@ -8,9 +8,7 @@ services:
       - ./instance:/app/instance
     ports:
       - "5000:5000"
-    environment:
-      - FLASK_APP=run.py
-    command: bash -c "pip install -r requirements.txt && flask run --host=0.0.0.0"
+    entrypoint: /app/entrypoint.sh
 
   minio:
     image: minio/minio
