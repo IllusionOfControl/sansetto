@@ -6,7 +6,7 @@ from app.config import Config
 from app.extensions import scheduler, db, migrate
 
 
-def create_application() -> Flask:
+def get_application() -> Flask:
     application = Flask(__name__, static_url_path="/static", static_folder="static/")
     application.config.from_object(Config)
 
@@ -28,4 +28,4 @@ def create_application() -> Flask:
     return application
 
 
-app = create_application()
+app = get_application()

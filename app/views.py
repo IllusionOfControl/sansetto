@@ -7,13 +7,9 @@ from flask import Blueprint, request, flash, render_template, redirect, url_for
 
 from app.models import Image
 from app.storage import ImageStorage
+from app.utils import check_accepted_mimetype
 
 bp = Blueprint("views", __name__)
-
-accepted_mimetypes = [
-    "image/jpeg",
-    "image/png",
-]
 
 
 @bp.get("/")
@@ -28,7 +24,7 @@ def upload_images():
     storage = ImageStorage()
 
     for file in files:
-        if file.mimetype not in accepted_mimetypes:
+        if check_accepted_mimetype(file.mimetype):
             flash("error", f"File {file.filename} is not accepted.")
             continue
 
