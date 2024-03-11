@@ -6,26 +6,33 @@ services:
     env_file: .env
     volumes:
       - ./instance:/app/instance
-    ports:
-      - "5000:5000"
     entrypoint: /app/entrypoint.sh
+    depends_on:
+      - minio
+    networks:
+      - backend
 
   minio:
     image: minio/minio
-    ports:
-      - "9000:9000"
     environment:
-      - MINIO_ACCESS_KEY=minio_access_key
-      - MINIO_SECRET_KEY=minio_secret_key
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
     volumes:
       - ./data:/data
     command: server /data
+    networks:
+      - backend
 
   nginx:
     image: nginx:alpine
     ports:
       - "8080:80"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./configs/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - panel
+    networks:
+      - backend
+
+networks:
+  backend:

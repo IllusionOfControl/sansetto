@@ -8,8 +8,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
+RUN chmod +x entrypoint.sh
+
 RUN python -m flask -A app.main:app db upgrade
 
 EXPOSE 5000
 
-CMD ["gunicorn", "app.main:app"]
+ENTRYPOINT ["/entrypoint.sh"]
