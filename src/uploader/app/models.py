@@ -1,10 +1,8 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import UUID
-from sqlalchemy import func
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from sqlalchemy import UUID, func
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
 
@@ -12,7 +10,7 @@ __all__ = ["ImagesMetaModel"]
 
 
 class ImagesMetaModel(Base):
-    __tablename__ = 'images_meta'
+    __tablename__ = "images_meta"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     uuid: Mapped[UUID] = mapped_column(unique=True, default=uuid.uuid4)

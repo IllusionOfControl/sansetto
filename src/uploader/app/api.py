@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, UploadFile, Form, File, Response, status, Depends
+from fastapi import APIRouter, Depends, File, Form, Response, UploadFile, status
 
 from app.dependencies import get_image_upload_service
 from app.exceptions import InternalException
@@ -11,11 +11,11 @@ router = APIRouter()
 ImageUploadServiceDep = Annotated[ImageUploadService, Depends(get_image_upload_service)]
 
 
-@router.post('/upload')
+@router.post("/upload")
 async def upload(
-        image: Annotated[UploadFile, File()],
-        meta: Annotated[str, Form(default="{}")],
-        image_upload_service: ImageUploadServiceDep
+    image: Annotated[UploadFile, File()],
+    meta: Annotated[str, Form(default="{}")],
+    image_upload_service: ImageUploadServiceDep,
 ):
     file_buff = await image.read()
     try:

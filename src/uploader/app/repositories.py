@@ -9,7 +9,9 @@ __all__ = ["ImageMetaRepository"]
 
 
 class ImageMetaRepository:
-    def __init__(self, session_factory: Callable[..., AbstractContextManager[AsyncSession]]):
+    def __init__(
+        self, session_factory: Callable[..., AbstractContextManager[AsyncSession]]
+    ):
         self._session_factory = session_factory
 
     async def create(self, image_meta: ImagesMetaModel) -> None:

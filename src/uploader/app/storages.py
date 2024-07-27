@@ -33,7 +33,11 @@ class MinIOStorage(Storage):
             secure=self._secure,
         )
 
-    async def store(self, path: str, data: bytes, ):
+    async def store(
+        self,
+        path: str,
+        data: bytes,
+    ):
         self._client.put_object(self._bucket, path, io.BytesIO(data), len(data))
         return path
 
