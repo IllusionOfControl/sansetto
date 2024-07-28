@@ -4,7 +4,7 @@ from io import BytesIO
 from PIL import Image
 
 from app.exceptions import InternalException
-from app.models import Image, ImagesMetaModel
+from app.models import ImagesMetaModel
 from app.repositories import ImageMetaRepository
 from app.schemas import ImageMetaScheme
 from app.storages import Storage
@@ -54,8 +54,8 @@ class ImageUploadService:
 
             thumbnail_buff = await self._generate_thumbnail(image_buff)
             await self._storage.store(
-                f"thumbnails/{image_meta_model.uuid.hex}", thumbnail_buff
+                f"thumbnails/{image_meta_model.uid.hex}", thumbnail_buff
             )
-            await self._storage.store(f"images/{image_meta_model.uuid.hex}", image_buff)
+            await self._storage.store(f"images/{image_meta_model.uid.hex}", image_buff)
         except Exception as exc:
             raise InternalException from exc

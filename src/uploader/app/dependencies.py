@@ -22,17 +22,17 @@ async def get_settings() -> Settings:
 
 
 async def get_database(
-    settings: Annotated[Settings : Depends(get_settings)],
+    settings: Annotated[Settings, Depends(get_settings)],
 ) -> Database:
     return Database(settings.database)
 
 
-async def get_storage(settings: Annotated[Settings : Depends(get_settings)]) -> Storage:
+async def get_storage(settings: Annotated[Settings, Depends(get_settings)]) -> Storage:
     return MinIOStorage(settings=settings.minio)
 
 
 async def get_image_meta_repository(
-    database: Annotated[Settings : Depends(get_database)],
+    database: Annotated[Settings,: Depends(get_database)],
 ) -> ImageMetaRepository:
     return ImageMetaRepository(database)
 

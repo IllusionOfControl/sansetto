@@ -13,7 +13,7 @@ class ImagesMetaModel(Base):
     __tablename__ = "images_meta"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    uuid: Mapped[UUID] = mapped_column(unique=True, default=uuid.uuid4)
+    uid: Mapped[uuid.UUID] = mapped_column(unique=True, default=uuid.uuid4)
     author: Mapped[str] = mapped_column(unique=True, nullable=False)
     tags: Mapped[str] = mapped_column(unique=True, nullable=False)
     source: Mapped[str] = mapped_column(unique=True, nullable=False)
@@ -24,4 +24,4 @@ class ImagesMetaModel(Base):
     published_at: Mapped[datetime | None] = mapped_column()
 
     def __repr__(self):
-        return f"<ImagesMetaModel uuid={self.uuid}>"
+        return f"<ImagesMetaModel uuid={self.uid}>"
