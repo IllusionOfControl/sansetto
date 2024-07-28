@@ -1,8 +1,10 @@
 from typing import Annotated
+from functools import cache
 
 from fastapi import Depends
 from onnxruntime import InferenceSession
 
+from app.logging import logger
 from app.services import TaggingService
 from app.settings import Settings
 
@@ -14,11 +16,14 @@ __all__ = [
 ]
 
 
-async def get_settings() -> Settings:
+@cache
+def get_settings() -> Settings:
     return Settings()
 
 
+@cache
 def get_model_session() -> InferenceSession:
+    logger.info("loading model session")
     tagger_model_path = "models/deepdanbooru-2021.onnx"
     return InferenceSession(tagger_model_path, providers=['CPUExecutionProvider'])
 

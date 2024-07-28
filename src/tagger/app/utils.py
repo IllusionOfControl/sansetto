@@ -1,5 +1,5 @@
 accepted_mimetypes = [
-    "image/jpg"
+    "image/jpg",
     "image/jpeg",
     "image/png",
 ]

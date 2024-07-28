@@ -2,6 +2,7 @@ from PIL import Image
 import numpy as np
 from onnxruntime import InferenceSession
 from app.logging import logger
+import io
 
 
 class TaggingService:
@@ -11,7 +12,7 @@ class TaggingService:
 
     def predict_tags(self, image_buff: bytes, score_threshold: float = 0.5) -> list[str]:
         logger.info("opening image")
-        image = Image.open(image_buff)
+        image = Image.open(io.BytesIO(image_buff))
         s = 512
         w, h = image.size
         h, w = (s, int(s * w / h)) if h > w else (int(s * h / w), s)
@@ -29,9 +30,12 @@ class TaggingService:
         probs = probs.astype(np.float32)
 
         logger.info("extracting tags")
-        res = []
+        extracted_tags = []
         for prob, label in zip(probs.tolist(), self._tags_list):
             if prob < score_threshold:
                 continue
-            res.append(label)
-        return res
+            label = label.replace(":", "_")
+            extracted_tags.append(label)
+
+
+        return extracted_tags
