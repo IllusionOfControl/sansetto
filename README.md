@@ -1,39 +1,26 @@
-# Sansetto - art bot
+# Sansetto - image publishing bot
 
-The bot is represented by a Flask application that has Web-UI of uploading and scheduled task for sending image to the telegram channel.
+A service for publishing images of art on telegram.
 
 ## Getting Started
-
-### Prerequisites
-Before you begin, make sure you have the following installed:
-
-- Python 3.x
-- Minio Server (for local object storage)
 
 ### Installation
 
 1. Clone the repository:
 
 ```bash
-
-git clone https://github.com/your_username/project.git
-cd project
+git clone https://github.com/IllusionOfControl/Sansetto.git
+cd Sansetto
 ````
 
-2. Install dependencies:
+2. Configuration
 
-```bash 
-pip install -r requirements.txt
-```
+Configure the application by editing the .env file.
 
-3. Configuration
+### Deployment
 
-Configure the application by editing the .env file. Provide the necessary information for Minio and Flask.
-
-4. Running the Application
-
-#### Local
+#### Docker
 
 ```bash
-python app.py
+docker compose up
 ```
