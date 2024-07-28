@@ -1,22 +1,46 @@
 version: '3'
 
 services:
-  panel:
-    build: ./
+  publisher:
+    build: ./src/publisher/
     env_file: .env
-    volumes:
-      - ./instance:/app/instance
-    entrypoint: /app/entrypoint.sh
+    depends_on:
+      - minio
+      - database
+    networks:
+      - backend
+
+  tagger:
+    build: ./src/tagger/
+    env_file: .env
     depends_on:
       - minio
     networks:
       - backend
 
-  minio:
+  uploader:
+    build: ./src/uploader/
+    env_file: .env
+    depends_on:
+      - minio
+      - database
+    networks:
+      - backend
+
+  database:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_DB: "sansetto"
+      POSTGRES_USER: "sansetto_user"
+      POSTGRES_PASSWORD: "sansetto"
+    ports:
+      - "5432:5432"
+
+  storage:
     image: minio/minio
     environment:
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
     volumes:
       - ./data:/data
     command: server /data
@@ -30,7 +54,8 @@ services:
     volumes:
       - ./configs/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - panel
+      - uploader
+      - tagger
     networks:
       - backend
 
