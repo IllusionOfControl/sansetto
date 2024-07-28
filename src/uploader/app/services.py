@@ -1,4 +1,5 @@
 from hashlib import md5
+from io import BytesIO
 
 from PIL import Image
 
@@ -24,10 +25,22 @@ class ImageUploadService:
     async def _generate_thumbnail(file_buff: bytes) -> bytes:
         image = Image.open(file_buff)
         image.thumbnail((600, 600))
-        return image.tobytes()
+
+        thumb_buff = BytesIO()
+        image.save(thumb_buff)
+        return thumb_buff.getvalue()
+
+    @staticmethod
+    async def _convert_image_to_jpg(image_buff: bytes) -> bytes:
+        image = Image.open(image_buff)
+        image_buff = BytesIO()
+        image.save(image_buff, "jpg")
+        return image_buff.getvalue()
 
     async def upload(self, image_buff: bytes, meta_raw: str) -> None:
         try:
+            image_buff = await self._convert_image_to_jpg(image_buff)
+
             md5_hash = md5(image_buff).hexdigest()
 
             metadata = ImageMetaScheme.model_validate_json(meta_raw)
