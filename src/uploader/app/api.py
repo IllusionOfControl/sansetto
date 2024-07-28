@@ -1,11 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, File, Form, Response, UploadFile, status
-
 from app.dependencies import get_image_upload_service
 from app.exceptions import InternalException
 from app.services import ImageUploadService
 from app.utils import check_accepted_mimetype
+from fastapi import APIRouter, Depends, File, Form, Response, UploadFile, status
 
 router = APIRouter()
 
@@ -14,9 +13,9 @@ ImageUploadServiceDep = Annotated[ImageUploadService, Depends(get_image_upload_s
 
 @router.post("/upload")
 async def upload(
-        image_upload_service: ImageUploadServiceDep,
-        image: Annotated[UploadFile, File()],
-        meta: Annotated[str, Form()] = "{}",
+    image_upload_service: ImageUploadServiceDep,
+    image: Annotated[UploadFile, File()],
+    meta: Annotated[str, Form()] = "{}",
 ):
     if not check_accepted_mimetype(image.content_type):
         return {

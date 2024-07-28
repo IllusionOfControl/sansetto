@@ -1,8 +1,9 @@
-from PIL import Image
-import numpy as np
-from onnxruntime import InferenceSession
-from app.logging import logger
 import io
+
+import numpy as np
+from app.logging import logger
+from onnxruntime import InferenceSession
+from PIL import Image
 
 
 class TaggingService:
@@ -10,7 +11,9 @@ class TaggingService:
         self._model_session = model_session
         self._tags_list = tags_list
 
-    def predict_tags(self, image_buff: bytes, score_threshold: float = 0.5) -> list[str]:
+    def predict_tags(
+        self, image_buff: bytes, score_threshold: float = 0.5
+    ) -> list[str]:
         logger.info("opening image")
         image = Image.open(io.BytesIO(image_buff))
         s = 512
@@ -22,7 +25,7 @@ class TaggingService:
         logger.info("converting image")
         image_array = np.array(image).astype(np.float32) / 255
         pad_width = ((ph // 2, ph - ph // 2), (pw // 2, pw - pw // 2), (0, 0))
-        image_array = np.pad(image_array, pad_width, mode='edge')
+        image_array = np.pad(image_array, pad_width, mode="edge")
         image_array = image_array[np.newaxis, :]
 
         logger.info("predicting probs")
@@ -36,6 +39,5 @@ class TaggingService:
                 continue
             label = label.replace(":", "_")
             extracted_tags.append(label)
-
 
         return extracted_tags

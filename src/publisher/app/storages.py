@@ -1,8 +1,7 @@
 import io
 
-from minio import Minio
-
 from app.settings import MinIOSettings
+from minio import Minio
 
 __all__ = ["Storage", "MinIOStorage"]
 

@@ -1,13 +1,12 @@
 from hashlib import md5
 from io import BytesIO
 
-from PIL import Image
-
 from app.exceptions import InternalException
 from app.models import ImagesMetaModel
 from app.repositories import ImageMetaRepository
 from app.schemas import ImageMetaScheme
 from app.storages import Storage
+from PIL import Image
 
 __all__ = ["ImageUploadService"]
 

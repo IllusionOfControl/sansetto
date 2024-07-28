@@ -1,11 +1,10 @@
 from contextlib import AbstractContextManager
 from typing import Callable
 
-from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.exceptions import EntityNotFoundException
 from app.models import ImagesMetaModel
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 __all__ = ["ImageMetaRepository"]
 

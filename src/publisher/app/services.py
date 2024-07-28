@@ -1,10 +1,9 @@
-from telebot import TeleBot
-
 from app.exceptions import InternalException
 from app.logging import logger
 from app.repositories import ImageMetaRepository
 from app.settings import TelegramSettings
 from app.storages import Storage
+from telebot import TeleBot
 
 __all__ = ["TelegramService", "ImagePublisherService"]
 

@@ -1,10 +1,9 @@
 import uuid
 from datetime import datetime
 
+from app.database import Base
 from sqlalchemy import UUID, func
 from sqlalchemy.orm import Mapped, mapped_column
-
-from app.database import Base
 
 __all__ = ["ImagesMetaModel"]
 
