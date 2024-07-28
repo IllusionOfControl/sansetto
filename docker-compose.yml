@@ -5,7 +5,7 @@ services:
     build: ./src/publisher/
     env_file: .env
     depends_on:
-      - minio
+      - storage
       - database
     networks:
       - backend
@@ -13,8 +13,6 @@ services:
   tagger:
     build: ./src/tagger/
     env_file: .env
-    depends_on:
-      - minio
     networks:
       - backend
 
@@ -22,7 +20,7 @@ services:
     build: ./src/uploader/
     env_file: .env
     depends_on:
-      - minio
+      - storage
       - database
     networks:
       - backend
