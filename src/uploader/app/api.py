@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, File, Form, Response, UploadFile, status
 
 from app.dependencies import get_image_upload_service
 from app.exceptions import InternalException
+from app.utils import check_accepted_mimetype
 from app.services import ImageUploadService
 
 router = APIRouter()
@@ -17,6 +18,12 @@ async def upload(
     meta: Annotated[str, Form(default="{}")],
     image_upload_service: ImageUploadServiceDep,
 ):
+    if not check_accepted_mimetype(image.content_type):
+        return {
+            "success": False,
+            "message": "unsupported content type",
+        }
+
     file_buff = await image.read()
     try:
         await image_upload_service.upload(

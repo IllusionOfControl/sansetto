@@ -1,8 +1,15 @@
 from fastapi import FastAPI
+from app.api import router as api_router
 
 
 def get_app() -> FastAPI:
-    app = FastAPI()
+    app = FastAPI(
+        title="uploader",
+        description="uploader microservice",
+        version="1.0.0"
+    )
+
+    app.include_router(api_router)
 
     return app
 
