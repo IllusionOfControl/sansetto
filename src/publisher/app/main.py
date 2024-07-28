@@ -10,7 +10,3 @@ async def main():
     scheduler = AsyncIOScheduler()
     scheduler.add_job(task_publish_image, CronTrigger(minute="15"))
     scheduler.start()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
