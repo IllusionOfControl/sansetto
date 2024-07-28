@@ -23,7 +23,7 @@ class ImageUploadService:
 
     @staticmethod
     async def _generate_thumbnail(file_buff: bytes) -> bytes:
-        image = Image.open(file_buff)
+        image = Image.open(BytesIO(file_buff))
         image.thumbnail((600, 600))
 
         thumb_buff = BytesIO()
@@ -32,10 +32,10 @@ class ImageUploadService:
 
     @staticmethod
     async def _convert_image_to_jpg(image_buff: bytes) -> bytes:
-        image = Image.open(image_buff)
-        image_buff = BytesIO()
-        image.save(image_buff, "jpg")
-        return image_buff.getvalue()
+        image = Image.open(BytesIO(image_buff))
+        new_image_buff = BytesIO()
+        image.save(new_image_buff, "jpg")
+        return new_image_buff.getvalue()
 
     async def upload(self, image_buff: bytes, meta_raw: str) -> None:
         try:
