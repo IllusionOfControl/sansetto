@@ -24,7 +24,7 @@ class Database:
         url_fmt = "{protocol}://{user}:{password}@{host}:{port}/{database}"
         db_url = url_fmt.format(
             protocol=settings.protocol,
-            user=settings.user,
+            user=settings.username,
             password=settings.password,
             host=settings.host,
             port=settings.port,
